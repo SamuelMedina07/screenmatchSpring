@@ -24,8 +24,8 @@ public class Principal {
 
     public void menu(){
         System.out.println("Por favor escriba el nombre de la serie que desea informacion:");
-        nombreSerie = tratandoNombreSerie(teclado.nextLine());
-        var json = consumoApi.obtenerDatos(URL_BASE+nombreSerie+API_KEY);
+        this.nombreSerie = tratandoNombreSerie(teclado.nextLine());
+        var json = consumoApi.obtenerDatos(modelandoUrl()+API_KEY);
         var datos = conversor.obtenerDatos(json, DatosSerie.class);
         this.cantidadDeTemporadas = datos.totalDeTemporadas();
         
@@ -33,8 +33,10 @@ public class Principal {
 
         menuOpcionalInformacion();
 
+    }
 
-
+    public String modelandoUrl (){
+       return URL_BASE + nombreSerie;
     }
 
     public void menuOpcionalInformacion(){
@@ -52,7 +54,7 @@ public class Principal {
     public void mostrarDatosTemporadaConEpisodios(){
         List<DatosTemporada> temporadas = new ArrayList<>();
         for (int i = 1; i <= cantidadDeTemporadas; i++) {
-            var json3 = consumoApi.obtenerDatos(URL_BASE+nombreSerie+"&Season="+i+API_KEY);
+            var json3 = consumoApi.obtenerDatos(modelandoUrl()+"&Season=" + i + API_KEY);
             var datosTemporadas = conversor.obtenerDatos(json3, DatosTemporada.class);
             temporadas.add(datosTemporadas);
         }
