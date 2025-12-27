@@ -58,7 +58,16 @@ public class Principal {
             var datosTemporadas = conversor.obtenerDatos(json3, DatosTemporada.class);
             temporadas.add(datosTemporadas);
         }
-        temporadas.forEach(System.out::println);
+       // temporadas.forEach(System.out::println);
+
+        temporadas.forEach(temporada -> temporada.episodios()
+                .forEach(episodio ->
+                        System.out.printf("""
+                                Temporada: %d
+                                Numero de Episodio: %d
+                                Nombre: %s
+                                %n""",temporada.temporada(),episodio.numeroEpisodio(),episodio.titulo()))
+        );
 
     }
     public String tratandoNombreSerie(String nombre){
